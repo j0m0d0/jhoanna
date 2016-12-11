@@ -1,0 +1,196 @@
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<!-- BS JavaScript -->
+<script type="text/javascript" src="js/bootstrap.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+     $('#uploadPdf').change(function() {
+                    if ( $(this).val() != "" ) {
+                      $("#comentario").removeAttr("disabled");
+                      $("#upload").removeAttr("disabled");
+                    }else{
+                      $("#comentario").attr("disabled","disabled");
+                      $("#upload").attr("disabled","disabled");
+                    }
+        });
+});
+</script>
+<div class="container">
+    <div class="row">
+    <br><br><br>
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <a tabindex="-1"  style="text-align: center;" >
+              <button class="btn btn-primary" data-toggle="modal" data-target="#myfirm" id="btn_fir" onclick='return false;'>
+                <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+                  &nbsp;Anexar
+              </button>
+            </a>
+        </div>  
+    </div>  
+</div>     
+
+
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button> -->
+
+<!-- <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
+</div> -->
+
+
+<div class="modal fade bs-example-modal-lg" id="myfirm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel1">Anexo de Firmas </h4>
+            </div>
+        <div class="modal-body">
+          <form action="<?php //echo $this->url('reqservicio',array("action"=>"aprobacion","id"=>$id,'param'=> 4 ));?>" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-12">
+                      <label>Documento: </label>
+                      <input type="file" name="file" id="uploadPdf" class="form-control" accept="image/*" placeholder="5mb"/>
+                    </div>
+                    <!-- <div class="col-md-12"><br>
+                      <label>Comentario: </label>
+                      <textarea type="text" name="comentario" maxlength="144" placeholder="Opcional" id="comentario" class="form-control"></textarea>
+                    </div> -->
+                    
+                    <div class="col-md-12">
+                      <table class="table table-hover" style='height: 100px;'>
+                        <thead>
+                          <tr>
+                            <th width="50%" style='text-align: center;'>Vista previa</th>
+                            <!-- <th>Responsable</th> -->
+                            <th>Fecha de Importación</th>
+                            <th>Descargar</th>
+                          </tr>
+                        </thead>
+                        <tbody id="contenido">
+                          <?php
+              if ($DataMedia != "") {
+                  foreach ($DataMedia as $key => $value) {
+                      echo "<tr>";
+                      $comentario = ($value['comentario'] != null) ? $value['comentario'] : "N/A" ;
+                        echo "<td style='text-align: center;' >";
+                        //echo "<div class='col-md-3'>";
+                          echo "<a  class='thumbnail' onclick='return false;'>";
+                              echo "<img src='".$this->basePath($value['path'])."' alt=''>";
+                          //echo "</a>";
+                        echo "</div>";
+                        echo "</td>";
+                        //echo "<td>" . $value['archivo_id'] . "</td>";
+                        echo "<td>" . $value['fecha'] . "</td>";
+                        echo "<td>
+                                            <a href='" . $this->basePath($value['path']) . "' class='btn btn-success' target='blank'>
+
+                                                <span class='glyphicon glyphicon-download' aria-hidden='true'></span>
+                                                Descargar Formato
+
+                                            </a>
+                                        </td>";
+                      echo "</tr>";
+                  }
+              }
+              ?>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <button class="btn btn-success" id="upload"  disabled="disabled">
+                          <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                          Enviar
+                        </button>
+                        <button class="btn btn-danger" onclick="return false;" data-toggle="modal" data-target="#myfirm">
+                          <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
+                          Salir
+                        </button>
+                      </div>
+                    </div>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+
+
+
+
+
+
+
+
+
+$(document).ready(function () {
+    $("#upload1").click(function(){
+        console.log("INICIAMOS!");
+        //var File = new File(document.getElementById("file"));
+        /*bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' });*/
+        var File = $("#uploadPdf").val();
+        console.log(File);
+        $.ajax({
+            type:"POST",
+            url: "<?php echo $this->url('home',array('action' =>'savedata')); ?>",
+            //dataType: "html",
+            // cache: false,
+            // contentType: false,
+            // processData: false,
+            data: { File: File},
+                success: function(data){
+                    console.log(data);
+                    $("#myfirm").hide();
+                    msg = "<div style='text-align:center;'><strong>Guardado.</strong></div>";
+                    bootbox.alert(msg, function(){
+                        location.reload();
+                    });
+                },
+                error: function(){
+                    bootbox.alert("¡No se han podido realizar cambios, intente nuevamente!", function(){
+                        location.reload();
+                    });
+                }
+            });
+                
+    });
+
+});
+    </script>
+<script>
+$(document).ready(function () {
+        
+    
+        $("#formuploadajax").on("submit", function(e){
+            e.preventDefault();
+            var f = $(this);
+            var formData = new FormData(document.getElementById("formuploadajax"));
+            formData.append("dato", "valor");
+            //formData.append(f.attr("name"), $(this)[0].files[0]);
+            $.ajax({
+                url: "recibe.php",
+                type: "post",
+                dataType: "html",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+                .done(function(res){
+                    $("#mensaje").html("Respuesta: " + res);
+                });
+        });
+    });
+    </script>
+</body>
+</html>

@@ -12,5 +12,24 @@
  */
 
 return array(
-    // ...
-);
+     'service_manager' => array(
+         'factories' => array(
+             'Zend\Db\Adapter\Adapter' =>
+                 'Zend\Db\Adapter\AdapterServiceFactory',
+         ),
+		 'abstract_factories' => array(
+		            'Zend\Db\Adapter\AdapterAbstractServiceFactory',
+		   ),
+     ),
+     'db' => array(
+         'driver' => 'Pdo',
+         //'dsn' => 'mysql:dbname=db_geotest;host=50.62.46.164',
+         'dsn' => 'mysql:dbname=db_johanna;host=localhost',
+         'driver_options' => array(
+             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+         ),	 
+     )/*,
+     'view_manager' => array(
+        'display_exceptions'       => false,
+     )*/
+ );

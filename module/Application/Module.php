@@ -8,6 +8,8 @@
  */
 
 namespace Application;
+//Mappers
+use Application\Model\DataMediaMapper;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -33,6 +35,22 @@ class Module
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'DataMediaMapper'                       => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $mapper    = new DataMediaMapper($dbAdapter);
+                    return $mapper;
+                },
+                'GlobalsFunctionHelper'            => function ($sm) {
+                    return new Helper\GlobalsFunctionHelper;
+                },
             ),
         );
     }
