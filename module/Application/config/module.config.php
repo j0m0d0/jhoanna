@@ -20,6 +20,39 @@ return array(
                     ),
                 ),
             ),
+
+            // CONTROLLERS
+
+             'login' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/login[/][:action][/:id]',
+                     'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\Login',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
+
+             'ajax' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/ajax[/][:action][/:id]',
+                     'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\Ajax',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
+
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -73,7 +106,9 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Ajax' => 'Application\Controller\AjaxController',
+            'Application\Controller\Login' => 'Application\Controller\LoginController',
         ),
     ),
     'view_manager' => array(

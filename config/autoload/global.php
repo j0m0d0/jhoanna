@@ -24,7 +24,8 @@ return array(
      'db' => array(
          'driver' => 'Pdo',
          //'dsn' => 'mysql:dbname=db_geotest;host=50.62.46.164',
-         'dsn' => 'mysql:dbname=db_johanna;host=localhost',
+         //'dsn' => 'mysql:dbname=db_jhoanna;host=localhost',
+         'dsn' => 'mysql:dbname=u338517275_jho;host=localhost',
          'driver_options' => array(
              PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
          ),	 

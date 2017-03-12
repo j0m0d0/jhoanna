@@ -1,0 +1,73 @@
+<style type="text/css">
+  #capa-imagen{
+     width:50%;
+     text-align: center !important;
+     margin: 0 auto 0px;
+}
+#capa-imagen img{
+     padding:0 !important;
+     margin:0 !important;
+     width:90% !important;
+     height:auto !important;
+     margin: 0 auto 0px !important;
+}
+.+ .info {
+    margin: 15px auto !important;
+    text-align: center !important;
+}
+.form .thumbnail {
+  /*background: white !important;*/
+}
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+</style>
+  <title> Login </title>
+<?php
+$title = 'Inicia sesión';
+$this->headTitle($title);
+$form = $this->form;
+?>
+<!-- <body> -->
+<div class="row">
+                  
+<div class="/*container*/">
+<!-- <span> <i class="fa fa-heart"></i> <a href="http://andytran.me"></a></span> -->
+  <!-- <div class="conter"> -->
+    <div class="info">
+      <h1 style="text-align: center;color:white;"> Iniciar Sesión </h1>
+    </div>
+  <!-- </div> -->
+
+  <div class="form" >
+    <div class="thumbnail*/" id="capa-imagen"><img src="<?php echo $this->basePath('images/logo/horda.png'); ?>"/></div>
+    <br>
+    <div class="register-form">
+      <input type="text" placeholder="Nombre"/>
+      <input type="password" placeholder="Contraseña"/>
+      <input type="text" placeholder="Correo Electronico"/>
+      <button>Registrar</button>
+      <p class="message">¿Ya estas registrado? <a href="#">Iniciar Sesión</a></p>
+    </div>
+    <div class="login-form">
+    <?php
+                    /*$this->headTitle("Login usuarios");*/
+                    $form = $this->form;
+                    echo $this->form()->openTag($form);
+                  ?>
+      <input type="text" name="correo" placeholder="username"/>
+      <input type="password" name="pass" placeholder="password"/>
+      <button class="submit" name="submit" type="submit">Iniciar Sesión</button>
+      <!-- <p class="message">¿No estas registrado? <a href="#">Crear cuenta</a></p> -->
+      <?php  echo $this->form()->closeTag(); ?>
+    </div>
+  </div>
+  </div>
+
+</div>
+<!-- <script src="<?php //echo $this->basePath('js/index.js'); ?>"></script> -->
+
+<!-- </body> -->
+<!-- </html> -->

@@ -1,15 +1,25 @@
-<?php echo $this->doctype(); ?>
-
+<?php   
+        echo $this->doctype(); 
+        $controllerArray = explode($this->serverUrl(), $this->serverUrl(true) );
+        $currentUrl = $controllerArray[1];
+?>
 <html lang="en">
     <head>
+
         <meta charset="utf-8">
-        <?php echo $this->headTitle('Jhoanna '. $this->translate('Jhoanna'))->setSeparator(' - ')->setAutoEscape(false) ?>
-        <?php echo $this->headMeta()
+        <?php echo $this->headTitle(' Inicio - '. $this->translate('Jhoanna'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php 
+            $acceso = "";
+            if ($this->layout()->identi != null) {
+                $acceso = $this->layout()->roles[$this->layout()->identi->rol_id]['allow'];
+            }
+            //print_r($acceso);
+            echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
         <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/logo/horda.png'))
                         //->prependStylesheet($this->basePath() . '/css/style.css')
                         ->prependStylesheet($this->basePath('css/style.css'))
                         //->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
@@ -27,47 +37,31 @@
             //->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath('js/html5shiv.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
-        ; ?>        
-    </head>
-
-    <body>
-    <!-- MODAL LOADING AJAX -->
-            <div style="display:none" class="loading-modal">
-                <!--<div>
-                    <img src="<?php //echo $this->basePath('img/logo-geotest.png') ?>" alt="Geo Test" style="width:20%;"/>    
-                </div>-->
-                
-                CARGANDO...<div class="cssload-spin"></div>
-            </div>
-        <!-- MODAL LOADING AJAX -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php// echo $this->url('home') ?>"><img src="<?php //echo $this->basePath('img/zf2-logo.png') ?>"/>&nbsp;<?php echo $this->translate('Jhoanna') ?></a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
-        <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; 2016 - <?php echo date('Y') ?> by Jhoanna Ltd. <?php echo $this->translate('Todos los derechos reservados.') ?></p>
-            </footer>
-        </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
-    </body>
-</html>
-<style type="text/css">
+        ; ?>   
+        <style type="text/css">
+    .navbar-inverse .navbar-nav>li>a {
+            color: #FFFFFF!important;
+            /*padding-right: 3px!important;
+            padding-left: 3px!important;*/
+        }
+        .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+           padding-left: auto!important;
+            padding-right: auto!important;
+        }
+        .collapse .navbar-collapse .navbar-right{
+            /*padding-left: 1px!important;
+            padding-right: 1px!important;*/
+        }
+        a.dropdown-toggle{
+            padding-left: 8px!important;
+            padding-right: 8px!important;
+            
+        }
+    .at-about-fab__thumbnail {
+      /*left: -65px !important;*/
+      width: 50px !important;
+      height: 50px !important;
+    }
     .btn    {
                 display: inline-block;
                 padding: 6px 12px;
@@ -89,9 +83,7 @@
                 /*border: 1px solid transparent;*/
                 /*border-radius: 4px;*/
             }
-
-
-               .navbar-brand  {
+    .navbar-brand  {
                 margin-left: auto;
                 margin-right: 5px;
                 padding-right: 0px!important;
@@ -131,4 +123,77 @@
                 /*background-color: linear-gradient(to bottom,#4285F4 0,#1B498C 100%);*/
                  /*#1B498C;*/
             }
-</style>
+</style>     
+    </head>
+    <body>
+    <!-- MODAL LOADING AJAX -->
+            <div style="display:none" class="loading-modal">
+                <!--<div>
+                    <img src="<?php //echo $this->basePath('img/logo-geotest.png') ?>" alt="Geo Test" style="width:20%;"/>    
+                </div>-->
+                
+                CARGANDO...<div class="cssload-spin"></div>
+            </div>
+        <!-- MODAL LOADING AJAX -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img 
+    style="width: 23px;" src="<?php echo $this->basePath('/images/logo/horda.png') ?>"/>&nbsp;<?php //echo $this->translate('Jhoanna') ?></a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Inicio') ?></a></li>
+                    </ul>
+                    <?php switch($acceso): case  !"": ?>
+                        <nav class="collapse navbar-collapse navbar-right">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="#<?php //echo $this->url('login', array('action'=>'cerrar', "id" => $this->layout()->identi->id)) ?>" class="dropdown-toggle" data-toggle="dropdown" >
+                                    <span class="glyphicon glyphicon-user /*log-out*/" aria-hidden="true"></span> <!-- Cerrar Sesión -->
+                                        <?php echo $this->translate(''.$this->layout()->identi->nombre.' '.$this->layout()->identi->apaterno)/*.' '.$this->layout()->identi->amaterno)*/ ?>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" >
+                                     <li>
+                                        <a href="<?php echo $this->url('home', array('action' => 'perfil_usuario')) ?>">
+                                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Ver mi perfil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo $this->url('login', array('action'=>'cerrar', "id" => $this->layout()->identi->id)) ?>">
+                                            <!-- <img src="<?php //echo $this->basePath('img/logout.png'); ?>" alt="Logout"/>--><?php echo $this->translate('  Salir'); ?> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <?php break; ?>
+                    <?php default: //return $this->redirect()->toRoute('login'); //return $this->redirect()->toRoute('login', array("action"=>"cerrar", "id"=>"0"));?>
+                     <?php break; ?>
+                    <?php endswitch; ?>
+
+                    <?php if( $acceso != '' ) :?>
+                    
+                <?php endif; ?>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        
+        
+        <div class="container">
+            <?php echo $this->content; ?>
+            <hr>
+            <footer>
+                <p>&copy; 2016 - <?php echo date('Y') ?> by Jhoanna Ltd. <?php echo $this->translate('Todos los derechos reservados.') ?></p>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

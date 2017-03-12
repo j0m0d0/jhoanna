@@ -13,55 +13,27 @@ use Application\Model\DataMediaEntity;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+//Autentificación de usuario cargado
+use Zend\Authentication\AuthenticationService;
 
 class IndexController extends AbstractActionController
 {
-    public function indexAction()
-    {    
 
-    	$request = $this->getRequest();
-    	if ($request->isPost()) {
-	    	$msg       = "";
-	    	$File      = $this->params()->fromFiles('file');
-	    	$ruta_save = "/images/data_media";
-	    	$result = $this->getHelper("GlobalsFunctionHelper")->uploadFile($File, $ruta_save, $type = null);
-	        if ($result != "") {
-	            $DataMediaEntity = new DataMediaEntity();
-	            $DataMediaEntity->setPath($result);
-	            date_default_timezone_set("America/Mexico_City");
-	            $DataMediaEntity->setFecha(date("Y-m-d H:i:s") );
-	            $DataMediaEntity->setUsuarioId( "Usuario Default" );
-	            $this->getMapper("DataMediaMapper")->save($DataMediaEntity);
-	        }
-    	}
-
-    	$DataMedia   = $this->getMapper("DataMediaMapper")->fetchAllArray();
-        return array( 
-            "DataMedia"=>$DataMedia            
-        );
+    private $auth;
+    public function __construct()
+    {
+        //Cargamos el servicio de autenticación en el constructor
+        $this->auth = new AuthenticationService();
     }
 
-    public function savedataAction()
-    {
-    	$msg       = "";
-    	$msg = "no guardo";
-	    $File      = $this->params()->fromFiles('file');
-	    $ruta_save = "/images/data_media";
-	    $result = $this->getHelper("GlobalsFunctionHelper")->uploadFile($File, $ruta_save, $type = null);
-	        if ($result != "") {
-	            $DataMediaEntity = new DataMediaEntity();
-	            $DataMediaEntity->setPath($result);
-	            date_default_timezone_set("America/Mexico_City");
-	            $DataMediaEntity->setFecha(date("Y-m-d H:i:s") );
-	            $DataMediaEntity->setUsuarioId( "Usuario Default" );
-	            $this->getMapper("DataMediaMapper")->save($DataMediaEntity);
-	            $msg = "si guardo";
-	        }
-
-	    header('Content-Type: application/json');
-        echo json_encode($msg); 
-        exit(0);
-        //$this->layout('layout/blank');
+    public function indexAction()
+    {    
+        $auth = $this->auth;
+        $identi=$auth->getStorage()->read();
+        // echo "<pre>";
+        // print_r($identi);
+        // echo "</pre>";
+        return array();
     }
 
     public function getMapper($mapper)
